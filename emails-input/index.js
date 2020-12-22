@@ -102,7 +102,7 @@ class EmailsInput {
     emailList = emails
       .split(',')
       .map(e => e.toLowerCase().trim())
-      .filter(e => !this._addedEmails.includes(e));
+      .filter(e => !this._addedEmails.indexOf(e) > -1);
 
     const fragment = document.createDocumentFragment();
     new Set(emailList).forEach(email => {
