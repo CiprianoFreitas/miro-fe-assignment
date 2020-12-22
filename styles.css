@@ -1,0 +1,53 @@
+body {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: Open Sans, Arial, sans-serif;
+}
+
+.invite-modal {
+  width: 540px;
+  background-color: #fff;
+  min-height: 300px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  top: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.invite-modal__body {
+  padding: 32px 50px 24px 50px;
+  background: #f8f8f7;
+  border-radius: 8px 8px 0 0;
+}
+
+.invite-modal__title {
+  font-weight: normal;
+  margin-bottom: 24px;
+  line-height: 27px;
+  font-size: 20px;
+  color: #050038;
+}
+
+.invite-modal__actions-container {
+  padding: 24px 50px 32px 50px;
+  border-radius: 0 0 8px 8px;
+  display: flex;
+}
+
+.invite-modal__action {
+  margin-right: 16px;
+  height: 40px;
+  display: inline-block;
+  padding: 8px 15px;
+  color: white;
+  background: #4262ff;
+  border-radius: 6px;
+  border: none;
+}
+
+.emails-input-container {
+  height: 100px;
+}
