@@ -28,10 +28,10 @@
   line-height: 24px;
   color: #050038;
   border: none;
-}
 
-.emails-input__input:-ms-input-placeholder {
-  color: #c3c2cf;
+  &:-ms-input-placeholder {
+    color: #c3c2cf;
+  }
 }
 
 .email {
@@ -49,16 +49,20 @@
   padding-left: 0;
   padding-right: 16px;
   background-color: transparent;
-}
 
-.email--invalid::after {
-  position: absolute;
-  bottom: 0;
-  display: block;
-  width: 100%;
-  height: 1px;
-  content: '';
-  border-bottom: 1px dashed #d92929;
+  &::after {
+    position: absolute;
+    bottom: 0;
+    display: block;
+    width: 100%;
+    height: 1px;
+    content: '';
+    border-bottom: 1px dashed #d92929;
+  }
+
+  & .email__btn-delete {
+    right: 0;
+  }
 }
 
 .email__btn-delete {
@@ -71,9 +75,6 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
-}
-.email--invalid .email__btn-delete {
-  right: 0;
 }
 
 svg path {

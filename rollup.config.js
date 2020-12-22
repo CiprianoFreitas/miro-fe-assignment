@@ -1,9 +1,22 @@
 import { terser } from 'rollup-plugin-terser';
-import css from 'rollup-plugin-css-porter';
+import postcss from 'rollup-plugin-postcss';
+import cssnano from 'cssnano';
+import precss from 'precss';
 
 export default {
   input: 'emails-input/index.js',
-  plugins: [css({ minified: true }), terser()],
+  plugins: [
+    postcss({
+      extract: true,
+      plugins: [
+        precss(),
+        cssnano({
+          preset: 'default',
+        }),
+      ],
+    }),
+    terser(),
+  ],
   output: {
     file: 'build/bundle.js',
     format: 'es',
