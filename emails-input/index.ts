@@ -96,14 +96,19 @@ class EmailsInput {
   addEmails(emails: string) {
     console.log('what');
     if (!emails) return;
-    let emailList = [];
+    let emailList: string[] = [];
     emailList = emails
       .split(',')
       .map((e: string) => e.toLowerCase().trim())
       .filter((e: string) => this._addedEmails.indexOf(e) === -1);
 
+    //Could've used a set here, but on IE11 that's not iterable and I'm avoiding using polyfills
+    const dedupedEmailList = emailList.filter(
+      (e, i) => emailList.indexOf(e) === i
+    );
+
     const fragment = document.createDocumentFragment();
-    Array.from(new Set(emailList)).forEach(email => {
+    dedupedEmailList.forEach(email => {
       this._addedEmails.push(email.trim());
       const emailPillEl = document.createElement('div');
       emailPillEl.className = 'email emails-input__email';
