@@ -99,10 +99,13 @@ class EmailsInput {
   addEmails(emails) {
     if (!emails) return;
     let emailList = [];
-    emailList = emails.split(',');
+    emailList = emails
+      .split(',')
+      .map(e => e.toLowerCase().trim())
+      .filter(e => !this._addedEmails.includes(e));
 
     const fragment = document.createDocumentFragment();
-    emailList.forEach(email => {
+    new Set(emailList).forEach(email => {
       this._addedEmails.push(email.trim());
       const emailPillEl = document.createElement('div');
       emailPillEl.className = 'email emails-input__email';

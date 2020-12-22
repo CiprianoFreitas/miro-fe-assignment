@@ -2,9 +2,8 @@
 
 visit: https://miro-test.ciprianofreitas.vercel.app
 
+# EmailsInput
 
-
-#  EmailsInput
 EmailsInput is a component that allows to transform an element on a page into an email address field.
 
 ## How to use
@@ -36,8 +35,7 @@ _Getting the list of valid emails_
 emailsInput.getEmails() // ['cipri@miro.com']
 ```
 
-
 ## What could be improved?
-- Preventing duplicate emails from being entered
+
 - Removing last entered email on a backspace press
 - Testing
