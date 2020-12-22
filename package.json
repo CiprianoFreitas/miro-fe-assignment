@@ -12,6 +12,6 @@
   "scripts": {
     "build": "rollup --config",
     "start": "parcel index.html",
-    "build-site": "parcel build index.html"
+    "build-site": "yarn build; parcel build index.html"
   }
 }
