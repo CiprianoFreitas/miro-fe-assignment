@@ -3,7 +3,7 @@ const template = `<div class="emails-input">
       <div class="emails-input__container"></div><input class="emails-input__input" type="email" aria-label="add more people..." placeholder="add more people...">
     </div>`;
 
-const createEmailPill = email => {
+const createEmailPill = (email: string) => {
   return `${email}
             <button class="email__btn-delete" title="Delete email">
               <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -13,32 +13,34 @@ const createEmailPill = email => {
         `;
 };
 
-const isEmailValid = email => {
+const isEmailValid = (email: string) => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 };
 
 class EmailsInput {
-  _addedEmails;
-  _enteredEmailsContainer;
-  _newEmailInputEl;
+  _addedEmails: string[];
+  _enteredEmailsContainer: HTMLDivElement;
+  _newEmailInputEl: HTMLInputElement;
   container;
 
-  constructor(container) {
+  constructor(container: HTMLElement) {
     this._addedEmails = [];
 
     container.innerHTML = template;
 
-    this._enteredEmailsContainer = container.querySelector(
+    this._enteredEmailsContainer = container.querySelector<HTMLDivElement>(
       '.emails-input__container'
-    );
+    )!;
 
-    this._newEmailInputEl = container.querySelector('.emails-input__input');
+    this._newEmailInputEl = container.querySelector<HTMLInputElement>(
+      '.emails-input__input'
+    )!;
 
     this.container = container;
 
     this._onKeyDown = this._onKeyDown.bind(this);
     this._onInputBlur = this._onInputBlur.bind(this);
-    this._onFocusInput = this._focusInput.bind(this);
+    this._onFocusInput = this._onFocusInput.bind(this);
     this._onPaste = this._onPaste.bind(this);
 
     this._addEventListeners();
@@ -47,24 +49,19 @@ class EmailsInput {
   _addEventListeners() {
     this._newEmailInputEl.onkeydown = this._onKeyDown;
     this._newEmailInputEl.onblur = this._onInputBlur;
-    this.container.onclick = this._focusInput;
+    this.container.onclick = this._onFocusInput;
     this.container.onpaste = this._onPaste;
   }
 
-  _onPaste(evt) {
+  _onPaste(evt: ClipboardEvent) {
     evt.preventDefault();
-    let data;
-
-    if (window.clipboardData && window.clipboardData.getData) {
-      data = window.clipboardData.getData('Text');
-    } else if (evt.clipboardData && evt.clipboardData.getData) {
-      data = evt.clipboardData.getData('text/plain');
-    }
+    let clipboardData = evt.clipboardData || (<any>window).clipboardData;
+    let data = clipboardData.getData('Text');
 
     this.addEmails(data);
   }
 
-  _onKeyDown(evt) {
+  _onKeyDown(evt: KeyboardEvent) {
     switch (evt.key) {
       case ',':
       case 'Enter':
@@ -75,43 +72,46 @@ class EmailsInput {
     }
   }
 
-  _onInputBlur(evt) {
-    const target = evt.currentTarget;
+  _onInputBlur(evt: FocusEvent) {
+    const target = evt.currentTarget as HTMLInputElement;
     if (!target) return;
     const value = target.value;
     this.addEmails(value);
     target.value = '';
   }
 
-  _focusInput(evt) {
+  _onFocusInput(evt: FocusEvent) {
     if (evt.target === this.container) {
       this._newEmailInputEl.focus();
     }
   }
 
-  _deleteEmail(email) {
+  _deleteEmail(email: string) {
     const index = this._addedEmails.indexOf(email);
     if (index > -1) {
       this._addedEmails.splice(index, 1);
     }
   }
 
-  addEmails(emails) {
+  addEmails(emails: string) {
+    console.log('what');
     if (!emails) return;
     let emailList = [];
     emailList = emails
       .split(',')
-      .map(e => e.toLowerCase().trim())
-      .filter(e => !this._addedEmails.indexOf(e) > -1);
+      .map((e: string) => e.toLowerCase().trim())
+      .filter((e: string) => this._addedEmails.indexOf(e) === -1);
 
     const fragment = document.createDocumentFragment();
-    new Set(emailList).forEach(email => {
+    Array.from(new Set(emailList)).forEach(email => {
       this._addedEmails.push(email.trim());
       const emailPillEl = document.createElement('div');
       emailPillEl.className = 'email emails-input__email';
       if (!isEmailValid(email)) emailPillEl.className += ' email--invalid';
       emailPillEl.innerHTML = createEmailPill(email);
-      const btnDeleteEl = emailPillEl.querySelector('.email__btn-delete');
+      const btnDeleteEl = emailPillEl.querySelector<HTMLButtonElement>(
+        '.email__btn-delete'
+      )!;
       btnDeleteEl.onclick = () => {
         this._deleteEmail(email);
         this._enteredEmailsContainer.removeChild(emailPillEl);
