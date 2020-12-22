@@ -1,6 +1,10 @@
 # Cipriano Freitas - Miro FE assignment
 
+This project uses rollup to bundle the component. It is written in typescript and uses postcss for styling.
+
 This repo is automatically deployed to: https://miro-test.ciprianofreitas.vercel.app
+
+To see it in action locally run `yarn start`
 
 # EmailsInput
 
