@@ -1,6 +1,6 @@
 # Cipriano Freitas - Miro FE assignment
 
-visit: https://miro-test.ciprianofreitas.vercel.app
+This repo is automatically deployed to: https://miro-test.ciprianofreitas.vercel.app
 
 # EmailsInput
 
